@@ -1,4 +1,19 @@
 <?php
+
+function buatkode($b) {
+    $awalnya = array("1","2","3","4","5","6","7","8","9","0");
+    $gantinya =   array("W@","a","r","D","s","x","C","z","q","H");
+    $hasilnya = str_replace($awalnya, $gantinya, $b);
+    return $hasilnya;
+ }
+ 
+ function terjemahkan($t) {
+    $kodenya =   array("W@","a","r","D","s","x","C","z","q","H");
+    $terjemahanya = array("1","2","3","4","5","6","7","8","9","0");
+    $hasilterjemahan = str_replace($kodenya, $terjemahanya, $t);
+    return $hasilterjemahan;
+ }
+
  function urlnya(){
      $data='';
 
@@ -72,7 +87,7 @@ function kecamatan_get(){
     return $data;
 }
 function calon(){
-    $data=App\Calon::all();
+    $data=App\Calon::orderBy('urut','Asc')->get();
 
     return $data;
 }
@@ -155,6 +170,36 @@ function cek_user($id){
 
     return $data['name'];
 }
+
+function saksi($id){
+    $data=App\Pengguna::where('tps',$id)->first();
+
+    return cek_user($data['nik']);
+}
+
+function cek_file($id){
+    $cek=App\Filesaksi::where('tps',$id)->count();
+    if($cek>0){
+        $data=App\Filesaksi::where('tps',$id)->first();
+        if(pengguna()==$id){
+            $file='<span class="btn btn-xs btn-success" onclick="ubah_file(`'.buatkode($id).'`)"><i class="fa fa-clone"></i></span>';
+        }else{
+            $file='<span class="btn btn-xs btn-success" onclick="lihat_file(`'.$data['file'].'`)"><i class="fa fa-clone"></i></span>';
+        }
+        
+    }else{
+        if(pengguna()==$id){
+            $file='<span class="btn btn-xs btn-default" onclick="ubah_file(`'.buatkode($id).'`)" ><i class="fa fa-clone"></i></span>';
+        }else{
+            $file='<span class="btn btn-xs btn-default" ><i class="fa fa-clone text-yellow"></i></span>';
+        }
+        
+    }
+    
+
+    return $file;
+}
+
 function lokasi($id){
     $data=App\Pengguna::where('tps',$id)->first();
     $lok='KEC:'.cek_kecamatan($data['kecamatan_id']).'/KEL:'.cek_kelurahan($data['kelurahan_id']);
@@ -167,13 +212,16 @@ function paslon($id){
         $data=url('icon/paslon1.png');
     }
     if($id==2){
-        $data=url('icon/paslon1.png');
+        $data=url('icon/paslon2.png');
     }
     if($id==3){
-        $data=url('icon/paslon1.png');
+        $data=url('icon/paslon3.png');
     }
     if($id==4){
-        $data=url('icon/paslon1.png');
+        $data=url('icon/paslon4.png');
+    }
+    if($id==0){
+        $data=url('icon/paslon0.png');
     }
 
     return $data;

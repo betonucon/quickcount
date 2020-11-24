@@ -7,5 +7,6 @@
     @endif
     @if(Auth::user()['role_id']==2)
         <li><a href="{{url('pemilihan')}}"><i class="fa fa-folder text-yellow"></i> <span>Pemilihan</span></a></li>
+        <li><a href="{{url('pemilihan/file')}}"><i class="fa fa-folder text-yellow"></i> <span>Bukti Hasil TPS</span></a></li>
     @endif
 </ul>

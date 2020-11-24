@@ -18,6 +18,7 @@ Route::get('/cek/password/{id}', 'HomeController@password');
 Auth::routes();
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/chart', 'HomeController@chart');
     Route::get('/', 'HomeController@index')->name('home');
 });
 
@@ -27,14 +28,17 @@ Route::group(['middleware'    => 'auth'],function(){
 });
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/pemilihan', 'PemilihanController@index');
+    Route::get('/pemilihan/file', 'PemilihanController@index_file');
     Route::get('/pemilihan/tambah', 'PemilihanController@tambah');
     Route::get('/pemilihan/ubah/{id}', 'PemilihanController@ubah');
+    Route::get('/pemilihan/ubah_file/{id}', 'PemilihanController@ubah_file');
     Route::get('/pemilihan/hapus/{id}', 'PemilihanController@hapus');
     Route::get('/pemilihan/kelurahan/{id}', 'PemilihanController@cek_kelurahan');
     Route::get('/pemilihan/api', 'PemilihanController@api');
     Route::get('/pemilihan/api_pemilu', 'PemilihanController@api_pemilu');
     Route::post('/pemilihan/simpan', 'PemilihanController@simpan');
     Route::post('/pemilihan/simpan_ubah/{id}', 'PemilihanController@simpan_ubah');
+    Route::post('/pemilihan/simpan_file/{id}', 'PemilihanController@simpan_file');
 });
 
 Route::group(['middleware'    => 'auth'],function(){
